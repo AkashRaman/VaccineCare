@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}VaccineCare{% endblock %}
+
+{% block registration %}
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
+    <ul class="dropdown-menu" style="min-width: auto;">
+      <li><button class="dropdown-item btn btn-light btn-login"><a href="{{url_for('logout')}}">Log out</a></button></li>
+    </ul>
+  </li>
+</ul>
+
+{% endblock %}
+
+{% block body %}
+<main class="container text-center">
+    <div class="row justify-content-md-center mt-5">
+      <h2 class="col-md-auto">
+        Welcome {{user.type}} {{user.username}}
+      </h2>
+    </div>
+{% if user.type == 'User' %}
+  <div class="row justify-content-md-center mt-2 px-2">
+    <p class="col-md-auto">
+      U can apply {{user.admission_count}} Admission for Vaccination
+    </p>
+  </div>
+{% else %}
+  <div class="row justify-content-md-center mt-2 px-2">
+    <p class="col-md-auto">
+      Check for any vaccination center and add them to the database.
+    </p>
+  </div>
+  <div class="row justify-content-md-center mt-2 px-2">
+    <button type="button" class="btn btn-primary w-auto p-2 px-3 mx-auto"><a href="{{url_for('centerRegister')}}">Add Center</a></button>
+  </div>
+{% endif %}
+</main>
+{% if centers|length < 1 %}
+<section class="container text-center">
+    <div class="row justify-content-md-center mt-2 px-2">
+        <p class="col-md-auto">
+          There is no Vaccination Center Available. PLease wait
+        </p>
+    </div>
+</section>
+{% else %}
+<form action="" method="post">
+  <table class="table table-striped table-hover mt-5 mx-auto" style="width: 85%;">
+      <thead>
+        <tr>
+          <th scope="row"></th>
+          <td class="col">
+          </td>
+          <td class="col">
+            <select class="form-control" id="working_hours" name="working_hours">
+              <option selected value="null">Select Hours</option>
+              {% for hour in hours_list %}
+              <option value="{{hour}}">{{hour}}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td class="col">
+            <select class="form-control" id="location" name="location">
+              <option selected value="null">Select Location</option>
+              {% for location in locations_list %}
+              <option value="{{location}}">{{location}}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td class="col">
+            <button type="submit" class="btn btn-outline-danger">Search</button>
+          </td>
+      </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Center</th>
+          <th scope="col">Working Hours</th>
+          <th scope="col">Location</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>        
+          {% for center in centers %}
+          <tr>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{center.hospital}}</td>
+              <td>{{center.working_hours}}</td>
+              <td>{{center.location}}</td>
+              <td>
+                {% if user.type == 'User' %}
+                <button type="button" class="btn btn-primary btn-sm"><a href="/admission/center={{center.id}}">Apply</a></button>
+                {% else %}
+                <button type="button" class="btn btn-primary btn-sm my-1"><a href="/modify/{{center.id}}">Modify</a></button>
+                <button type="button" class="btn btn-danger btn-sm my-1"><a href="/delete/{{center.id}}">Delete</a></button>
+                {% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+</form>
+{% endif %}
+{% endblock %}

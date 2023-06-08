@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}VaccineCare{% endblock %}
+
+{% block registration %}
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
+    <ul class="dropdown-menu" style="min-width: auto;">
+      <li><button class="dropdown-item btn btn-light btn-login"><a href="{{url_for('logout')}}">Log out</a></button></li>
+    </ul>
+  </li>
+</ul>
+
+{% endblock %}
+
+{% block body %}
+<main class="container px-5 col-sm-7">
+  <div class="row justify-content-md-center my-5 text-center">
+    <h2 class="col-md-auto">
+      Admission Form
+    </h2>
+  </div>
+    <form action="" method="post">
+        <div class="container">
+            <div class="mb-4">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" required>
+            </div>
+            <div class="row gx-2 mb-4">
+              <div class="col-md-auto" style="width: 5rem!important;">
+                <label for="age" class="form-label mb-0 px-2 h-100">Age</label>
+              </div>
+              <div class="col-md-auto" style="width: 5rem!important;">
+                <input type="number" name="age" id="age" class="form-control" required>
+              </div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="location">Location</label>
+                <input type="text" class="form-control" name="location" id="location" required>
+            </div>
+            <div class="row gx-2 mb-3">
+                <div class="col-6">
+                  <label for="mobile_number" class="form-label mb-0 px-2 h-100">Mobile Number 1</label>
+                </div>
+                <div class="col-6">
+                  <input type="text" name="mobile_number" id="mobile_number" class="form-control" minlength="10" maxlength = "10" required>
+                </div>
+            </div>
+            <div class="row gx-2 mb-3">
+                <div class="col-6">
+                    <label for="mobile_number_2" class="form-label mb-0 px-2 h-100">Mobile Number 2</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="mobile_number_2" id="mobile_number_2" class="form-control" minlength="10" maxlength = "10" required>
+                </div>
+            </div>
+            <div class="row gx-2 mb-3">
+                <div class="col-6">
+                  <label for="aadhar_number" class="form-label mb-0 px-2 h-100">Aadhar Number</label>
+                </div>
+                <div class="col-6">
+                  <input type="text" name="aadhar_number" id="aadhar_number" class="form-control" minlength="12" maxlength = "12" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</main>
+{% endblock %}

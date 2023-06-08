@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}VaccineCare{% endblock %}
+
+{% block registration %}
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
+    <ul class="dropdown-menu" style="min-width: auto;">
+      <li><button class="dropdown-item btn btn-light btn-login"><a href="{{url_for('logout')}}">Log out</a></button></li>
+    </ul>
+  </li>
+</ul>
+
+{% endblock %}
+
+{% block body %}
+<main class="container px-5 col-sm-7">
+  <div class="row justify-content-md-center my-5 text-center">
+    <h2 class="col-md-auto">
+      Vaccination Center Registration
+    </h2>
+  </div>
+    <form action="" method="post">
+        <div class="mb-3">
+            <label for="hospital" class="form-label">Hospital</label>
+            <input type="text" class="form-control" name="hospital" id="hospital" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="working_hours" class="form-label">Working Hours</label>
+            <input type="text" class="form-control" name="working_hours" id="working_hours">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="location">Location</label>
+            <input type="text" class="form-control" name="location" id="location">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+{% endblock %}

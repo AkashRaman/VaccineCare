@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  
+  html {
+    box-sizing: border-box;
+    /* font-size: 62.5%; */
+  }
+
+  /* @media only screen and (max-width: ) {
+    font-size: 50%;
+  }
+
+  @media only screen and (max-width: ) {
+    font-size: 50%;
+  } */
+
+body {
+    padding-bottom: 20px;
+  }
+  
+.navbar {
+    margin-bottom: 20px;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.btn-login{
+    margin-right: 10px;
+}
+
+.btn-login a,
+.btn-signin a,
+.btn-primary a,
+.btn-danger a{
+    text-decoration: none;
+    color: inherit;
+}
