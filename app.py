@@ -220,7 +220,7 @@ def modify(id):
         db.session.commit()
         return redirect(url_for('home'))
     else:
-        return render_template('centerModify.html', form = center)
+        return render_template('centerModify.html', form = center, user=current_user)
 
 @app.route('/delete/<int:id>')
 @login_required
