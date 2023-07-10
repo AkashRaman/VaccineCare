@@ -30,15 +30,15 @@
 {% else %}
   <div class="row justify-content-md-center mt-2 px-2">
     <p class="col-md-auto">
-      Check for any vaccination center and add them to the database.
+      Check for any vaccination centre and add them to the database.
     </p>
   </div>
   <div class="row justify-content-md-center mt-2 px-2">
-    <button type="button" class="btn btn-primary w-auto p-2 px-3 mx-auto"><a href="{{url_for('centerRegister')}}">Add Center</a></button>
+    <button type="button" class="btn btn-primary w-auto p-2 px-3 mx-auto"><a href="{{url_for('centerRegister')}}">Add Centre</a></button>
   </div>
 {% endif %}
 </main>
-{% if centers|length < 1 %}
+{% if centres|length < 1 %}
 <section class="container text-center">
     <div class="row justify-content-md-center mt-2 px-2">
         <p class="col-md-auto">
@@ -56,7 +56,7 @@
           </td>
           <td class="col">
             <select class="form-control" id="working_hours" name="working_hours">
-              <option selected value="null">Select Hours</option>
+              <option selected value="null">Any Hours</option>
               {% for hour in hours_list %}
               <option value="{{hour}}">{{hour}}</option>
               {% endfor %}
@@ -64,9 +64,17 @@
           </td>
           <td class="col">
             <select class="form-control" id="location" name="location">
-              <option selected value="null">Select Location</option>
+              <option selected value="null">All Location</option>
               {% for location in locations_list %}
               <option value="{{location}}">{{location}}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td class="col">
+            <select class="form-control" id="dosage" name="dosage">
+              <option selected value="null">Any Dosage</option>
+              {% for dosage in dosages_list %}
+              <option value="{{dosage}}">{{dosage}}ml</option>
               {% endfor %}
             </select>
           </td>
@@ -76,25 +84,35 @@
       </tr>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Center</th>
+          <th scope="col">Centre</th>
           <th scope="col">Working Hours</th>
           <th scope="col">Location</th>
+          <th scope="col">Dosages</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>        
-          {% for center in centers %}
+          {% for centre in centres %}
           <tr>
               <th scope="row">{{loop.index}}</th>
-              <td>{{center.hospital}}</td>
-              <td>{{center.working_hours}}</td>
-              <td>{{center.location}}</td>
+              <td>{{centre.hospital}}</td>
+              <td>{{centre.working_hours}}</td>
+              <td>{{centre.location}}</td>
+              <td>
+                <div class="row justify-content-md-center">
+                  {% for dosage in centre.dosages.split(", ") %}
+                  <div class="col-12 mx-auto">
+                    {{dosage[1:dosage|length - 1]}}ml
+                  </div>
+                  {% endfor %}
+                </div>
+              </td>
               <td>
                 {% if user.type == 'User' %}
-                <button type="button" class="btn btn-primary btn-sm"><a href="/admission/center={{center.id}}">Apply</a></button>
+                <button type="button" class="btn btn-primary btn-sm"><a href="/admission/centre={{centre.id}}">Apply</a></button>
                 {% else %}
-                <button type="button" class="btn btn-primary btn-sm my-1"><a href="/modify/{{center.id}}">Modify</a></button>
-                <button type="button" class="btn btn-danger btn-sm my-1"><a href="/delete/{{center.id}}">Delete</a></button>
+                <button type="button" class="btn btn-primary btn-sm my-1"><a href="/modify/{{centre.id}}">Modify</a></button>
+                <button type="button" class="btn btn-danger btn-sm my-1"><a href="/delete/{{centre.id}}">Delete</a></button>
                 {% endif %}
               </td>
           </tr>

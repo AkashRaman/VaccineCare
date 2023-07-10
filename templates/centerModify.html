@@ -18,23 +18,71 @@
 <main class="container px-5 col-sm-7">
   <div class="row justify-content-md-center my-5 text-center">
     <h2 class="col-md-auto">
-      Vaccination Center Registration
+      Vaccination Centre Registration
     </h2>
   </div>
     <form action="" method="post">
         <div class="mb-3">
             <label for="hospital" class="form-label">Hospital</label>
-            <input type="text" class="form-control" name="hospital" id="hospital" aria-describedby="emailHelp" value="{{form.hospital}}">
+            <input type="text" class="form-control" name="hospital" id="hospital" required value="{{form.hospital}}">
           </div>
           <div class="mb-3">
             <label for="working_hours" class="form-label">Working Hours</label>
-            <input type="text" class="form-control" name="working_hours" id="working_hours" value="{{form.working_hours}}">
+            <input type="text" class="form-control" name="working_hours" id="working_hours" value="{{form.working_hours}}" required >
           </div>
           <div class="mb-3">
             <label class="form-label" for="location">Location</label>
-            <input type="text" class="form-control" name="location" id="location" value="{{form.location}}">
+            <input type="text" class="form-control" name="location" id="location" value="{{form.location}}" required>
+          </div>
+          <div class="row gx-2 mb-4">
+            <div class="col-md-auto" style="width: 10rem!important;">
+              <label for="dosage_no" class="form-label mb-0 px-2 h-100">Number of Dosage</label>
+            </div>
+            <div class="col-md-auto" style="width: 5rem!important;">
+              <input type="number" name="dosage_no" id="dosage_no" class="form-control" min="1" max="10" value="{{dosages|length}}" required>
+            </div>
+            <div class="col-md-auto" style="width: 5rem!important;">
+              <button type="button" class="btn btn-primary btn-sm my-1 dosage_btn">Enter</button>
+            </div>
+          </div>
+          <div class="container dosage_div">
+            {% for dosage in dosages %}
+            <div class="row gx-2 mb-4">
+              <div class="col-md-auto" style="width: 7.5rem!important;">
+                <label for="dosage_{{loop.index}}" class="form-label mb-0 px-2 h-100">Dosage in ml</label>
+              </div>
+              <div class="col-md-auto" style="width: 5rem!important;">
+                <input type="number" name="dosage_{{loop.index}}" id="dosage_{{loop.index}}" class="form-control" min="1" max="500" required value="{{dosage[1:dosage|length - 1]}}">
+              </div>
+            </div>
+            {% endfor %}
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </main>
+{% endblock %}
+{% block inlineScript %}
+<Script>
+  const dosage_div = document.querySelector(".dosage_div");
+  const dosage_btn = document.querySelector(".dosage_btn");
+  const dosage_no = document.querySelector("#dosage_no");
+  dosage_btn.addEventListener('click',()=>{
+    if(dosage_no.value){
+      let array = [];
+      for(var i = 0; i < dosage_no.value; i++){
+        array.push(`<div class="row gx-2 mb-4">
+            <div class="col-md-auto" style="width: 7.5rem!important;">
+              <label for="dosage_${i+1}" class="form-label mb-0 px-2 h-100">Dosage in ml</label>
+            </div>
+            <div class="col-md-auto" style="width: 5rem!important;">
+              <input type="number" name="dosage_${i+1}" id="dosage_${i+1}" class="form-control" min="1" max="500" required>
+            </div>
+          </div>`)
+      }
+      let html = array.join("");
+      console.log(array);
+      dosage_div.innerHTML = html;
+    }
+  })
+</Script>
 {% endblock %}
